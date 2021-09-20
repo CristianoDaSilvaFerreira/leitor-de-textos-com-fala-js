@@ -16,7 +16,17 @@ const humanExpression = [
    { img: "./img/home.jpg", text: "Quero ir para casa" },
    { img: "./img/school.jpg", text: "Quero or para escola" },
    { img: "./img/grandma.jpg", text: "Quero ver a vovó" },
-];
+]
+
+const utterance = new SpeechSynthesisUtterance();
+
+const setTextMessage = text => {
+   utterance.text = text;
+}
+
+const speakText = () => {
+   speechSynthesis.speak(utterance);
+}
 
 const createExpressionBox = ({ img, text }) => {
    const div = document.createElement("div");
@@ -26,6 +36,16 @@ const createExpressionBox = ({ img, text }) => {
     <img src="${img}" alt="${text}">
     <p class="info">${text}</p>
    `;
+
+   div.addEventListener('click', () => {
+      setTextMessage(text);
+      speakText();
+
+      div.classList.add('active');
+      setTimeout(() => {
+         div.classList.remove('active');
+      }, 1000)
+   });
 
    main.appendChild(div);
 };
